@@ -37,7 +37,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/files/init.sh:system/etc/init.sh \
     $(LOCAL_PATH)/files/excluded-input-devices.xml:system/etc/excluded-input-devices.xml \
     $(LOCAL_PATH)/files/modules.blacklist:system/etc/modules.blacklist \
-    $(LOCAL_PATH)/files/init.x86.rc:root/init.$(TARGET_PRODUCT).rc \
     $(LOCAL_PATH)/firmware/rtl8723bu_bt.bin:system/lib/firmware/rtlwifi/rtl8723bu_bt.bin \
     $(LOCAL_PATH)/firmware/rtl8723bu_nic.bin:system/lib/firmware/rtlwifi/rtl8723bu_nic.bin \
     $(LOCAL_PATH)/firmware/brcmfmac4356-pcie.txt:system/lib/firmware/brcm/brcmfmac4356-pcie.txt
