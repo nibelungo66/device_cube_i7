@@ -22,7 +22,16 @@ function init_misc()
 		setprop hal.sensors.iio.accel 1
 		if [ ! -d /sys/bus/i2c/drivers/i2c_hid/i2c-FTSC* ]; then
 			rmmod i2c_hid
-			modprobe i2c_hid; fi; fi
+			modprobe i2c_hid
+                fi
+
+                # Enable wakeup on all devices, as most are disabled by default causing
+                # resume from sleep to hang.
+                for i in `find /sys/devices/pci0000:00 | grep "/wakeup$"`
+                do
+                        echo "enabled" >$i
+                done
+        fi
 }
 
 function init_hal_audio()
