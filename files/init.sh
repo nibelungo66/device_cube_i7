@@ -19,6 +19,13 @@ function init_misc()
 	[ -d /sys/devices/system/cpu/cpu0/cpufreq ] || modprobe acpi-cpufreq
 
 	if [ "$VENDOR" = "Cube" ]; then
+                ### Set up the SD Card reader
+                rmmod rtsx_usb_mmc
+                rmmod rtsx_usb_ms
+                rmmod rtsx_usb
+                ### Can't modprobe, probably because we haven't run depmod on it
+                insmod /system/lib/modules/4.4.0-i7-stylus_x64/extras/rts5139.ko
+
 		setprop hal.sensors.iio.accel 1
 		if [ ! -d /sys/bus/i2c/drivers/i2c_hid/i2c-FTSC* ]; then
 			rmmod i2c_hid

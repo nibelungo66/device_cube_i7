@@ -100,7 +100,7 @@
             2 - Really go to sleep (don't doze)
             3 - Really go to sleep and go home (don't doze)
     -->
-    <integer name="config_shortPressOnPowerBehavior">2</integer>
+    <integer name="config_shortPressOnPowerBehavior">1</integer>
 
     <!-- Control the behavior when the user long presses the power button.
             0 - Nothing
@@ -112,7 +112,7 @@
 
     <!-- Minimum screen brightness setting allowed by the power manager.
          The user is forbidden from setting the brightness below this level. -->
-    <integer name="config_screenBrightnessSettingMinimum">10</integer>
+    <integer name="config_screenBrightnessSettingMinimum">20</integer>
     <integer name="config_screenBrightnessDim">30</integer>
 
     <!-- Package name(s) containing location provider support.
