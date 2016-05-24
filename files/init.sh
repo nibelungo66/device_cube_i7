@@ -24,7 +24,7 @@ function init_misc()
                 ### Can't modprobe, probably because we haven't run depmod on it
                 insmod /system/lib/modules/4.4.0-i7-stylus_x64/extra/rts5139.ko
 
-                setprop poweroff.doubleclick 0
+                #setprop poweroff.doubleclick 0
 		setprop hal.sensors.iio.accel 1
 		if [ ! -d /sys/bus/i2c/drivers/i2c_hid/i2c-FTSC* ]; then
 			rmmod i2c_hid
