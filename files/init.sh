@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2013-2015 The Android-x86 Open Source Project
+ Copyright (C) 2013-2015 The Android-x86 Open Source Project
 #
 # License: GNU Public License v2 or later
 #
@@ -22,7 +22,7 @@ function init_misc()
 
                 ### Set up the SD Card reader
                 ### Can't modprobe, probably because we haven't run depmod on it
-                insmod /system/lib/modules/4.4.0-i7-stylus_x64/extras/rts5139.ko
+                insmod /system/lib/modules/4.4.0-i7-stylus_x64/extra/rts5139.ko
 
                 setprop poweroff.doubleclick 0
 		setprop hal.sensors.iio.accel 1
