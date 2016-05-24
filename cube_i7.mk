@@ -22,7 +22,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/firmware/rtl8723bu_bt.bin:system/lib/firmware/rtlwifi/rtl8723bu_bt.bin \
     $(LOCAL_PATH)/firmware/rtl8723bu_nic.bin:system/lib/firmware/rtlwifi/rtl8723bu_nic.bin \
     $(LOCAL_PATH)/firmware/brcmfmac4356-pcie.txt:system/lib/firmware/brcm/brcmfmac4356-pcie.txt \
-    $(LOCAL_PATH)/rts5139/rts5139.ko:/system/lib/modules/4.4.0-i7-stylus_x64/extra/rts5139.ko
 
 $(call inherit-product,$(SRC_TARGET_DIR)/product/core_64_bit.mk)
 

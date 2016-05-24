@@ -1,11 +1,17 @@
 Android for Cube i7 Stylus
 =========
 
-To Do:
+WORKING
+-----
+  * WIFI
+  * Bluetooth
+  * SD Card Reader
+  * Orientation
+  * Touch
 
-  * Make this README less crappy...
+BUGGY
+-----
   * i2c hangs on resume
-  * Remove the double tap camera code
   * Power button triggers suspend, but it doesn't suspend
 
 Ubuntu 16.04 Android build host requirements
@@ -28,7 +34,7 @@ Run run.sh to build...???...profit?
 
 Thanks to wootever @ XDA for the code to fork, and the work to get it to where we are today.
 
-Resizing
+RESIZE IMAGES
 -----
 
 DATA IMAGE (2GB)
@@ -45,3 +51,16 @@ SYSTEM IMAGE (2GB)
     e2fsck -f system.img
     resize2fs system.img 524288
 
+CHANGES
+-----
+  * Revert commits (double tap camera stuffs)
+      5941c98c641e64a26bf68816faf967d25cc8f256
+      cc1e9f7ce76d6c1e6d721a398fe8ae8a882243bb
+
+  * Reverse accelerometer (corrects upside down orientation)
+
+  * Enable wakeup for all devices (init.sh)
+
+  * Add SDCard reader kernel module
+
+  * Massage project files
