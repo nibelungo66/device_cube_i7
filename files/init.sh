@@ -1,5 +1,5 @@
 #
- Copyright (C) 2013-2015 The Android-x86 Open Source Project
+# Copyright (C) 2013-2015 The Android-x86 Open Source Project
 #
 # License: GNU Public License v2 or later
 #

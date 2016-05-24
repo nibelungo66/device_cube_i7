@@ -15,7 +15,7 @@
 #
 
 
-PRODUCT_COPY_FILES := \
+PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/files/init.sh:system/etc/init.sh \
     $(LOCAL_PATH)/files/excluded-input-devices.xml:system/etc/excluded-input-devices.xml \
     $(LOCAL_PATH)/files/modules.blacklist:system/etc/modules.blacklist \
