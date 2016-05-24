@@ -1,4 +1,1 @@
 blacklist btusb
-blacklist rtsx_usb
-blacklist rtsx_usb_mmc
-blacklist rtsx_usb_ms
