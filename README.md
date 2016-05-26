@@ -11,7 +11,6 @@ WORKING
 
 BUGGY
 -----
-  * i2c hangs on resume
   * Power button triggers suspend, but it doesn't suspend
 
 Ubuntu 16.04 Android build host requirements
@@ -64,3 +63,5 @@ CHANGES
   * Add SDCard reader kernel module
 
   * Massage project files
+
+  * Update to mainline kernel 4.4.11
