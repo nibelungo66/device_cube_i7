@@ -24,7 +24,7 @@ function init_misc()
                 ### Can't modprobe, probably because we haven't run depmod on it
                 insmod /system/lib/modules/$(uname -r)/extra/rts5139.ko
 
-                set_property poweroff.doubleclick 0
+                set_property poweroff.doubleclick 1
 		set_property hal.sensors.iio.accel 1
                 #set_property hal.sensors.iio.anglvel.matrix -1,0,0,0,1,0,0,0,-1
 

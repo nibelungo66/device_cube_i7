@@ -8,10 +8,12 @@ WORKING
   * SD Card Reader
   * Orientation
   * Touch
+  * Sleep
 
 BUGGY
 -----
-  * Power button triggers suspend, but it doesn't suspend
+  * Resume from sleep is still somewhat glitchy
+  * Doze doesn't seem to work, it just goes right to sleep when you press power
 
 Ubuntu 16.04 Android build host requirements
 
@@ -31,7 +33,7 @@ replace android-x86/kernel with kernel_cube_i7
 
 Run run.sh to build...???...profit?
 
-Thanks to wootever @ XDA for the code to fork, and the work to get it to where we are today.
+Thanks to Wootever and HypoTurtle @ XDA for the code to fork, and the help to get it to where we are today.
 
 RESIZE IMAGES
 -----
