@@ -2,8 +2,7 @@
 
 ### Options:
 ### efi_img
-### usb_iso
-### efi_iso
+### iso_img
 OUTPUT="efi_img"
 
 cd ~/android-x86

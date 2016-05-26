@@ -22,11 +22,11 @@ function init_misc()
 
                 ### Set up the SD Card reader
                 ### Can't modprobe, probably because we haven't run depmod on it
-                insmod /system/lib/modules/$(uname -r)/extra/rts5139.ko
+                insmod /system/lib/modules/4.4.11-i7-stylus_x64/extra/rts5139.ko
 
                 set_property poweroff.doubleclick 1
 		set_property hal.sensors.iio.accel 1
-                #set_property hal.sensors.iio.anglvel.matrix -1,0,0,0,1,0,0,0,-1
+                set_property hal.sensors.iio.accel.matrix -1,0,0,0,-1,0,0,0,-1
 
 		if [ ! -d /sys/bus/i2c/drivers/i2c_hid/i2c-FTSC* ]; then
 			rmmod i2c_hid
