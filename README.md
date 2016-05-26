@@ -47,6 +47,7 @@ QUICK AND DIRTY BUILD STEPS (YMMV)
    - https://www.kernel.org/pub/linux/kernel/v4.x/
 
 5. Extract and patch the kernel
+
     for i in ~/android-x86/device/cube/i7/kernel/patches/*patch
     do
       patch -p1 <$i
@@ -57,6 +58,7 @@ QUICK AND DIRTY BUILD STEPS (YMMV)
 7. Run the build (run.sh)
 
 8. If it's the first run, change to the ~/android-x86/device/cube/i7/rts5139 directory and compile the kernel module
+
     cd ~/android-x86/device/cube/i7/rts5139
     make clean
     make
