@@ -29,4 +29,8 @@ rtl8723bu.patch
 thermal_revert.patch
   - Revert commits https://lkml.org/lkml/2015/12/31/160 and https://lkml.org/lkml/2016/3/19/5
   - Caused immediate kernel panic / reboot loop as the kernel assumed we were always exceeding the
-  - thresholds.
+    thresholds.
+
+i2c_reset.patch
+  - Corrects a race condition in i2c when resuming from sleep
+  - https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=9a327405014f4ef4cdad67a0686db82b9f23c62c
