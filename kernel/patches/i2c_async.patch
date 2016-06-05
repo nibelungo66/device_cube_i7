@@ -1,0 +1,10 @@
+--- drivers/hid/i2c-hid/i2c-hid.c.orig	2016-06-05 10:47:09.518451942 -0400
++++ drivers/hid/i2c-hid/i2c-hid.c	2016-06-05 10:47:49.482451664 -0400
+@@ -1020,6 +1020,7 @@ static int i2c_hid_probe(struct i2c_clie
+ 	pm_runtime_get_noresume(&client->dev);
+ 	pm_runtime_set_active(&client->dev);
+ 	pm_runtime_enable(&client->dev);
++        device_enable_async_suspend(&client->dev);
+ 
+ 	ret = i2c_hid_fetch_hid_descriptor(ihid);
+ 	if (ret < 0)
