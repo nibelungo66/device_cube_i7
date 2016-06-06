@@ -64,7 +64,7 @@ find unpacked/ -type f | xargs -n 1 -I@ sh -c 'cd `echo "@" | cut -d/ -f1-3`; fi
 
 echo "6. copying files into ${ANDROID_PRODUCT_OUT}/system ..."
 
-rsync -r combined/ ${ANDROID_PRODUCT_OUT}/system
+rsync -avr combined/ ${ANDROID_PRODUCT_OUT}/system
 
 echo "7. removing system.img and system.sfs to force their rebuild"
 

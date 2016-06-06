@@ -25,12 +25,13 @@ function init_misc()
                 insmod /system/lib/modules/4.4.11-i7-stylus_x64/extra/rts5139.ko
 
                 set_property poweroff.doubleclick 1
+                set_property ro.ignore_atkbd 1
 		set_property hal.sensors.iio.accel 1
                 set_property hal.sensors.iio.accel.matrix -1,0,0,0,-1,0,0,0,-1
 
 		if [ ! -d /sys/bus/i2c/drivers/i2c_hid/i2c-FTSC* ]; then
 			rmmod i2c_hid
-			modprobe i2c_hid
+		        modprobe i2c_hid
                 fi
 
                 # Enable wakeup on all devices, as most are disabled by default causing

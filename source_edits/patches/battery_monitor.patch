@@ -1,0 +1,54 @@
+commit 12c3e04fb7744c5c8f211e81960161a830ec06f4
+Author: Wootever <Wootever@users.noreply.github.com>
+Date:   Sat Feb 6 16:37:25 2016 +0100
+
+    simple workaround for failing acpi charger detection
+
+diff --git a/healthd/BatteryMonitor.cpp b/healthd/BatteryMonitor.cpp
+index 396dfef..1f0e95d 100644
+--- a/healthd/BatteryMonitor.cpp
++++ b/healthd/BatteryMonitor.cpp
+@@ -200,15 +200,6 @@ bool BatteryMonitor::update(void) {
+         mBatteryFixedTemperature :
+         getIntField(mHealthdConfig->batteryTemperaturePath);
+ 
+-    // For devices which do not have battery and are always plugged
+-    // into power souce.
+-    if (mAlwaysPluggedDevice) {
+-        props.chargerAcOnline = true;
+-        props.batteryPresent = true;
+-        props.batteryStatus = BATTERY_STATUS_CHARGING;
+-        props.batteryHealth = BATTERY_HEALTH_GOOD;
+-    }
+-
+     const int SIZE = 128;
+     char buf[SIZE];
+     String8 btech;
+@@ -216,6 +207,11 @@ bool BatteryMonitor::update(void) {
+     if (readFromFile(mHealthdConfig->batteryStatusPath, buf, SIZE) > 0)
+         props.batteryStatus = getBatteryStatus(buf);
+ 
++    if (props.batteryStatus == 2)
++        props.chargerAcOnline = true;
++    else
++        props.chargerAcOnline = false;
++
+     if (readFromFile(mHealthdConfig->batteryHealthPath, buf, SIZE) > 0)
+         props.batteryHealth = getBatteryHealth(buf);
+ 
+@@ -552,15 +548,6 @@ void BatteryMonitor::init(struct healthd_config *hc) {
+         closedir(dir);
+     }
+ 
+-    // This indicates that there is no charger driver registered.
+-    // Typically the case for devices which do not have a battery and
+-    // and are always plugged into AC mains.
+-    if (!mChargerNames.size()) {
+-        KLOG_ERROR(LOG_TAG, "No charger supplies found\n");
+-        mBatteryFixedCapacity = ALWAYS_PLUGGED_CAPACITY;
+-        mBatteryFixedTemperature = FAKE_BATTERY_TEMPERATURE;
+-        mAlwaysPluggedDevice = true;
+-    }
+     if (!mBatteryDevicePresent) {
+         KLOG_WARNING(LOG_TAG, "No battery devices found\n");
+         hc->periodic_chores_interval_fast = -1;

@@ -98,6 +98,8 @@
          turned off and the screen off animation has been performed. -->
     <bool name="config_dozeAfterScreenOff">true</bool>
 
+    <bool name="config_powerDecoupleAutoSuspendModeFromDisplay">true</bool>
+
     <!-- Control the behavior when the user short presses the power button.
             0 - Nothing
             1 - Go to sleep (doze)
@@ -119,25 +121,6 @@
     <integer name="config_screenBrightnessSettingMinimum">30</integer>
     <integer name="config_screenBrightnessDim">30</integer>
 
-    <!-- Package name(s) containing location provider support.
-         These packages can contain services implementing location providers,
-         such as the Geocode Provider, Network Location Provider, and
-         Fused Location Provider. They will each be searched for
-         service components implementing these providers.
-         It is strongly recommended that the packages explicitly named
-         below are on the system image, so that they will not map to
-         a 3rd party application.
-         The location framework also has support for installation
-         of new location providers at run-time. The new package does not
-         have to be explicitly listed here, however it must have a signature
-         that matches the signature of at least one package on this list.
-         -->
-
-  <!-- Enable overlay for all location components. -->
-    <bool name="config_enableNetworkLocationOverlay" translatable="false">true</bool>
-    <bool name="config_enableFusedLocationOverlay" translatable="false">true</bool>
-    <bool name="config_enableGeocoderOverlay" translatable="false">true</bool>
-    <bool name="config_enableGeofenceOverlay" translatable="false">true</bool>
     <!--
        Sets the package names whose certificates should be used to
        verify location providers are allowed to be loaded.
