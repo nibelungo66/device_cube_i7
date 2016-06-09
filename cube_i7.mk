@@ -41,6 +41,3 @@ PRODUCT_MODEL := Cube i7 Stylus
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.radio.noril=1
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/rts5139/rts5139.ko:/system/lib/modules/4.4.11-i7-stylus_x64/extra/rts5139.ko

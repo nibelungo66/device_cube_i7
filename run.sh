@@ -18,13 +18,3 @@ lunch cube_i7-userdebug
 #Build
 m -j 4 ${OUTPUT} 2>&1 | tee ~/build.log
 
-#Build the card reader module
-cd ~/android-x86/device/cube/i7/rts5139
-make clean 2>&1 | tee -a ~/build.log
-make 2>&1 | tee -a ~/build.log
-
-#Integrate GAPPS
-
-#Run the build again
-cd ~/android-x86
-m -j 4 ${OUTPUT} 2>&1 | tee -a ~/build.log

@@ -21,8 +21,7 @@ function init_misc()
 	if [ "$VENDOR" = "Cube" ]; then
 
                 ### Set up the SD Card reader
-                ### Can't modprobe, probably because we haven't run depmod on it
-                insmod /system/lib/modules/4.4.11-i7-stylus_x64/extra/rts5139.ko
+                modprobe rts5139
 
                 set_property poweroff.doubleclick 1
                 set_property ro.ignore_atkbd 1
