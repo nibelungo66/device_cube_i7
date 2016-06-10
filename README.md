@@ -16,6 +16,7 @@ BUGGY
 -----
   * Resume from sleep is still somewhat glitchy
   * Doze doesn't seem to work, it just goes right to sleep when you press power
+  * DRM doesn't seem to be working properly, no graphics acceleration
 
 PREPARE UBUNTU FOR ANDROID BOOTSTRAP
 ----
@@ -57,17 +58,9 @@ QUICK AND DIRTY BUILD STEPS (YMMV)
 
 7. Run the build (run.sh)
 
-8. If it's the first run, change to the ~/android-x86/device/cube/i7/rts5139 directory and compile the kernel module
+9. ???
 
-    cd ~/android-x86/device/cube/i7/rts5139;
-    make clean;
-    make
-    
-9. Run the build again (so the module is injected)
-
-10. ???
-
-11. Profit
+9. Profit
 
 Thanks to Wootever and HypoTurtle @ XDA for the code to fork, and the help to get it to where we are today.
 
@@ -91,4 +84,4 @@ CHANGES
 
   * Massage project files
 
-  * Update to mainline kernel 4.4.11
+  * Update to mainline kernel 4.4.13
