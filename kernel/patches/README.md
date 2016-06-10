@@ -31,13 +31,5 @@ thermal_revert.patch
   - Caused immediate kernel panic / reboot loop as the kernel assumed we were always exceeding the
     thresholds.
 
-i2c_reset.patch
-  - Corrects a race condition in i2c when resuming from sleep
-  - https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=9a327405014f4ef4cdad67a0686db82b9f23c62c
-
-i2c_suspend.patch
-  - Corrects an issue with i2c suspend and resume
-  - https://lkml.org/lkml/diff/2016/3/8/861/1
-
-i2c_async.patch
-  - http://www.gossamer-threads.com/lists/linux/kernel/2441848
+rts5139-kernel.patch
+  - Adds support for the SD Card reader
