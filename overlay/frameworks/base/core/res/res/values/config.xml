@@ -91,14 +91,12 @@
 
          Consider setting this resource to false or disabling dreams by default when a
          doze component is specified below since dreaming will supercede dozing and
-         will prevent the system from entering a low power state until the dream ends. -->
-    <bool name="config_dreamsSupported">false</bool>
+         will prevent the system from entering a low power state until the dream ends.
+    <bool name="config_dreamsSupported">true</bool>
 
-    <!-- If true, the doze component is not started until after the screen has been
-         turned off and the screen off animation has been performed. -->
-    <bool name="config_dozeAfterScreenOff">true</bool>
+    <bool name="config_dozeAfterScreenOff">false</bool>
 
-    <bool name="config_powerDecoupleAutoSuspendModeFromDisplay">false</bool>
+    <bool name="config_powerDecoupleAutoSuspendModeFromDisplay">true</bool> -->
 
     <!-- Control the behavior when the user short presses the power button.
             0 - Nothing
@@ -106,7 +104,7 @@
             2 - Really go to sleep (don't doze)
             3 - Really go to sleep and go home (don't doze)
     -->
-    <integer name="config_shortPressOnPowerBehavior">1</integer>
+    <integer name="config_shortPressOnPowerBehavior">2</integer>
 
     <!-- Control the behavior when the user long presses the power button.
             0 - Nothing
@@ -120,6 +118,10 @@
          The user is forbidden from setting the brightness below this level. -->
     <integer name="config_screenBrightnessSettingMinimum">30</integer>
     <integer name="config_screenBrightnessDim">30</integer>
+
+    <!-- Allow the gesture to double tap the power button twice to start the camera while the device
+         is non-interactive. -->
+    <bool name="config_cameraDoubleTapPowerGestureEnabled">false</bool>
 
     <!--
        Sets the package names whose certificates should be used to

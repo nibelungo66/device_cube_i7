@@ -23,6 +23,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/files/excluded-input-devices.xml:system/etc/excluded-input-devices.xml \
     $(LOCAL_PATH)/files/modules.blacklist:system/etc/modules.blacklist 
 
+
+
 $(call inherit-product,$(SRC_TARGET_DIR)/product/core_64_bit.mk)
 
 # includes the base of Android-x86 platform
@@ -40,4 +42,6 @@ PRODUCT_DEVICE := i7
 PRODUCT_MODEL := Cube i7 Stylus
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.radio.noril=1
+    ro.radio.noril=1 \
+    ro.dalvik.vm.isa.arm64=x86_64 \
+    ro.enable.native.bridge.exec64=1

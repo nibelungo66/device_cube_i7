@@ -6,40 +6,43 @@
 
 function set_property()
 {
-	# this must be run before post-fs stage
-	echo $1=$2 >> /x86.prop
+	setprop "$1" "$2"
+	[ -n "$DEBUG" ] && echo "$1"="$2" >> /dev/x86.prop
 }
 
 function init_misc()
 {
+	# device information
+	setprop ro.product.manufacturer "$(cat $DMIPATH/sys_vendor)"
+	setprop ro.product.model "$PRODUCT"
+
 	# a hack for USB modem
 	lsusb | grep 1a8d:1000 && eject
 
-	# in case no cpu governor driver autoloads
-	[ -d /sys/devices/system/cpu/cpu0/cpufreq ] || modprobe acpi-cpufreq
+        # in case no cpu governor driver autoloads
+        [ -d /sys/devices/system/cpu/cpu0/cpufreq ] || modprobe acpi-cpufreq
 
-	if [ "$VENDOR" = "Cube" ]; then
+        ### Cube i7 Stylus customizations
 
-                ### Set up the SD Card reader
-                modprobe rts5139
+        ### Set up the SD Card reader
+        rmmod rts5139
+        modprobe rts5139
 
-                set_property poweroff.doubleclick 1
-                set_property ro.ignore_atkbd 1
-		set_property hal.sensors.iio.accel 1
-                set_property hal.sensors.iio.accel.matrix -1,0,0,0,-1,0,0,0,-1
+        set_property poweroff.doubleclick 0
+        set_property ro.ignore_atkbd 1
+        set_property hal.sensors.iio.accel 1
+        set_property hal.sensors.iio.accel.matrix -1,0,0,0,-1,0,0,0,-1
 
-		if [ ! -d /sys/bus/i2c/drivers/i2c_hid/i2c-FTSC* ]; then
-			rmmod i2c_hid
-		        modprobe i2c_hid
-                fi
+        rmmod i2c_hid
+        modprobe i2c_hid
 
-                # Enable wakeup on all devices, as most are disabled by default causing
-                # resume from sleep to hang.
-                for i in `find /sys/devices/pci0000:00 | grep "/wakeup$"`
-                do
-                        echo "enabled" >$i
-                done
-        fi
+        # Enable wakeup on all devices, as most are disabled by default causing
+        # resume from sleep to hang.
+        for i in `find /sys/devices/pci0000:00 | grep "/wakeup$"`
+        do
+                echo "enabled" >$i
+        done
+
 }
 
 function init_hal_audio()
@@ -61,15 +64,22 @@ function init_hal_bluetooth()
 	done
 
 	case "$PRODUCT" in
-		T10*TA)
-			modprobe ak8975
-			modprobe hci-uart
+		T10*TA|HP*Omni*)
 			BTUART_PORT=/dev/ttyS1
-			brcm_patchram_plus -d --no2bytes --enable_hci --patchram /system/lib/firmware/brcm/bcm43241b4.hcd $BTUART_PORT
 			;;
 		MacBookPro8*)
 			rmmod b43
 			modprobe b43 btcoex=0
+			modprobe btusb
+			;;
+		# FIXME
+		# Fix MacBook 2013-2015 (Air6/7&Pro11/12) BCM4360 ssb&wl conflict.
+		MacBookPro11* | MacBookPro12* | MacBookAir6* | MacBookAir7*)
+			rmmod b43
+			rmmod ssb
+			rmmod bcma
+			rmmod wl
+			modprobe wl
 			modprobe btusb
 			;;
 		*)
@@ -83,13 +93,14 @@ function init_hal_bluetooth()
 	if [ -n "$BTUART_PORT" ]; then
 		set_property hal.bluetooth.uart $BTUART_PORT
 		chown bluetooth.bluetooth $BTUART_PORT
+		start btattach:-B$BTUART_PORT
 		log -t hciconfig -p i "`hciconfig`"
 	fi
 }
 
 function init_hal_camera()
 {
-	[ -c /dev/video0 ] || modprobe vivi
+	return
 }
 
 function init_hal_gps()
@@ -113,24 +124,47 @@ function set_drm_mode()
 
 function init_uvesafb()
 {
-	return
+	case "$PRODUCT" in
+		*Q550)
+			UVESA_MODE=${UVESA_MODE:-1280x800}
+			;;
+		ET2002*)
+			UVESA_MODE=${UVESA_MODE:-1600x900}
+			;;
+		T91*)
+			UVESA_MODE=${UVESA_MODE:-1024x600}
+			;;
+		VirtualBox*|Bochs*)
+			UVESA_MODE=${UVESA_MODE:-1024x768}
+			;;
+		*)
+			;;
+	esac
+
+	[ "$HWACCEL" = "0" ] && bpp=16 || bpp=32
+	modprobe uvesafb mode_option=${UVESA_MODE:-800x600}-$bpp ${UVESA_OPTION:-mtrr=3 scroll=redraw}
 }
 
 function init_hal_gralloc()
 {
 	case "$(cat /proc/fb | head -1)" in
+		*virtiodrmfb)
+#			set_property ro.hardware.hwcomposer drm
+			;&
 		0*inteldrmfb|0*radeondrmfb|0*nouveaufb|0*svgadrmfb)
 			set_property ro.hardware.gralloc drm
 			set_drm_mode
-			[ -n "$DEBUG" ] && set_property debug.egl.trace error
 			;;
 		"")
 			init_uvesafb
 			;&
 		0*)
-			[ "$HWACCEL" = "1" ] || set_property debug.egl.hw 0
+			# FIXME: software rendering failed to pass the SetupWizard
+			set_property ro.setupwizard.mode DISABLED
 			;;
 	esac
+
+	[ -n "$DEBUG" ] && set_property debug.egl.trace error
 }
 
 function init_hal_hwcomposer()
@@ -218,6 +252,12 @@ function init_hal_sensors()
 			modprobe hdaps
 			hal_sensors=hdaps
 			;;
+		*HPPaviliong*)
+			hal_sensors=hdaps
+			;;
+		*i7Stylus*)
+			set_property hal.sensors.iio.accel.matrix 1,0,0,0,-1,0,0,0,-1
+			;;
 		*)
 			;;
 	esac
@@ -245,6 +285,9 @@ function create_pointercal()
 function init_tscal()
 {
 	case "$PRODUCT" in
+		ST70416-6*)
+			modprobe gslx680_ts_acpi
+			;&
 		T91|T101|ET2002|74499FU|945GSE-ITE8712|CF-19[CDYFGKLP]*)
 			create_pointercal
 			return
@@ -263,6 +306,18 @@ function init_tscal()
 				;;
 		esac
 	done
+}
+
+function init_ril()
+{
+	case "$(cat $DMIPATH/uevent)" in
+		*TEGA*|*2010:svnIntel:*|*Lucid-MWE*)
+			set_property rild.libpath /system/lib/libhuaweigeneric-ril.so
+			set_property rild.libargs "-d /dev/ttyUSB2 -v /dev/ttyUSB1"
+			;;
+		*)
+			;;
+	esac
 }
 
 function init_cpu_governor()
@@ -289,7 +344,7 @@ function do_init()
 	init_hal_power
 	init_hal_sensors
 	init_tscal
-	chmod 640 /x86.prop
+	init_ril
 	post_init
 }
 
@@ -382,23 +437,24 @@ PATH=/sbin:/system/bin:/system/xbin
 DMIPATH=/sys/class/dmi/id
 BOARD=$(cat $DMIPATH/board_name)
 PRODUCT=$(cat $DMIPATH/product_name)
-VENDOR=$(cat $DMIPATH/sys_vendor)
 
 # import cmdline variables
 for c in `cat /proc/cmdline`; do
 	case $c in
-		androidboot.hardware=*)
+		*.*=*)
 			;;
 		*=*)
 			eval $c
-			case $c in
-				HWACCEL=*)
-					set_property debug.egl.hw $HWACCEL
-					;;
-				DEBUG=*)
-					set_property debug.logcat 1
-					;;
-			esac
+			if [ -z "$1" ]; then
+				case $c in
+					HWACCEL=*)
+						set_property debug.egl.hw $HWACCEL
+						;;
+					DEBUG=*)
+						[ -n "$DEBUG" ] && set_property debug.logcat 1
+						;;
+				esac
+			fi
 			;;
 	esac
 done
